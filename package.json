@@ -1,0 +1,24 @@
+{
+  "name": "vehistay-smart-parking",
+  "version": "2.0.0",
+  "description": "VehiStay - Smart Parking Solutions & Mobility Platform",
+  "main": "server.py",
+  "scripts": {
+    "start": "python server.py"
+  },
+  "dependencies": {
+    "qrcode": "^1.5.3",
+    "@supabase/supabase-js": "^2.45.0"
+  },
+  "keywords": [
+    "smart-parking",
+    "vehistay",
+    "qr-code",
+    "iot",
+    "supabase",
+    "anpr"
+  ],
+  "author": "VehiStay Team",
+  "license": "ISC"
+}
+

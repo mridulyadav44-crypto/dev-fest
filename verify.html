@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VehiStay - Parking Pass Official Verification</title>
+  <meta name="description" content="VehiStay Smart Parking Pass Real-Time Verification Portal for Drivers and Gate Operators.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #070b14;
+      --bg-card: rgba(15, 23, 42, 0.88);
+      --border-color: rgba(255, 255, 255, 0.12);
+      --border-accent: rgba(56, 189, 248, 0.35);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --sky-blue: #38bdf8;
+      --green-success: #10b981;
+      --amber-warn: #f59e0b;
+      --red-danger: #ef4444;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem 1rem;
+      background-image: 
+        radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.12) 0%, transparent 40%),
+        radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.1) 0%, transparent 40%);
+    }
+
+    .verify-container {
+      width: 100%;
+      max-width: 520px;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-lg);
+      padding: 2rem 1.75rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(16px);
+      text-align: center;
+      animation: fadeIn 0.3s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .brand-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 0.35rem;
+    }
+    .brand-header span.accent {
+      color: var(--sky-blue);
+    }
+    .verify-subtitle {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 1.5rem;
+    }
+
+    /* Verification Status Banner */
+    .status-banner {
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius-md);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+      text-align: left;
+    }
+    .status-banner.confirmed {
+      background: rgba(16, 185, 129, 0.15);
+      border: 1.5px solid rgba(16, 185, 129, 0.5);
+      color: #6ee7b7;
+    }
+    .status-banner.completed {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1.5px solid rgba(56, 189, 248, 0.5);
+      color: #7dd3fc;
+    }
+    .status-banner.expired {
+      background: rgba(245, 158, 11, 0.15);
+      border: 1.5px solid rgba(245, 158, 11, 0.5);
+      color: #fcd34d;
+    }
+    .status-banner.invalid {
+      background: rgba(239, 68, 68, 0.15);
+      border: 1.5px solid rgba(239, 68, 68, 0.5);
+      color: #fca5a5;
+    }
+    .status-icon {
+      font-size: 2rem;
+      line-height: 1;
+    }
+    .status-title {
+      font-size: 1.05rem;
+      font-weight: 800;
+      letter-spacing: 0.3px;
+    }
+    .status-desc {
+      font-size: 0.78rem;
+      opacity: 0.9;
+      margin-top: 0.15rem;
+    }
+
+    /* Verification Details Grid */
+    .details-card {
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid var(--border-color);
+      border-radius: var(--radius-md);
+      padding: 1.25rem;
+      margin-bottom: 1.5rem;
+      text-align: left;
+    }
+    .detail-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 0.86rem;
+    }
+    .detail-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .detail-row:first-child {
+      padding-top: 0;
+    }
+    .detail-label {
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      font-weight: 600;
+    }
+    .detail-value {
+      font-weight: 700;
+      color: #fff;
+    }
+    .detail-value.mono {
+      font-family: var(--font-mono);
+      color: var(--sky-blue);
+    }
+    .detail-value.plate {
+      font-family: var(--font-mono);
+      color: #38bdf8;
+      background: rgba(56, 189, 248, 0.1);
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      border: 1px solid rgba(56, 189, 248, 0.25);
+    }
+
+    /* Gate Action Button */
+    .btn-gate-checkin {
+      width: 100%;
+      padding: 0.85rem 1.25rem;
+      background: linear-gradient(135deg, #10b981, #059669);
+      color: #fff;
+      border: none;
+      border-radius: var(--radius-md);
+      font-family: inherit;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
+      transition: all 0.2s ease;
+      margin-bottom: 0.75rem;
+    }
+    .btn-gate-checkin:hover:not(:disabled) {
+      background: linear-gradient(135deg, #059669, #047857);
+      transform: translateY(-2px);
+    }
+    .btn-gate-checkin:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .btn-outline {
+      width: 100%;
+      padding: 0.65rem 1.25rem;
+      background: transparent;
+      border: 1px solid var(--border-color);
+      color: var(--text-muted);
+      border-radius: var(--radius-md);
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .btn-outline:hover {
+      color: #fff;
+      border-color: var(--sky-blue);
+      background: rgba(56, 189, 248, 0.08);
+    }
+
+    .security-guarantee {
+      margin-top: 1.25rem;
+      padding: 0.75rem;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px dashed var(--border-color);
+      border-radius: var(--radius-md);
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Loading Spinner */
+    .loading-state {
+      padding: 3rem 1rem;
+      text-align: center;
+    }
+    .spinner {
+      width: 44px;
+      height: 44px;
+      border: 3px solid rgba(56, 189, 248, 0.2);
+      border-top-color: var(--sky-blue);
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      margin: 0 auto 1rem;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="verify-container">
+    <div class="brand-header">
+      <span>🚗</span>
+      <span>vehi<span class="accent">stay</span></span>
+      <span style="font-size:0.65rem; background:rgba(56,189,248,0.15); color:var(--sky-blue); padding:0.2rem 0.5rem; border-radius:12px; font-weight:700;">OFFICIAL SCANNER</span>
+    </div>
+    <div class="verify-subtitle">Smart Parking Pass Real-Time Cryptographic Verification</div>
+
+    <!-- 1. Loading State -->
+    <div id="verifyLoading" class="loading-state">
+      <div class="spinner"></div>
+      <div style="font-weight:600; color:#fff;">Validating Parking Pass Signature...</div>
+      <div style="font-size:0.78rem; color:var(--text-muted); margin-top:0.35rem;">Connecting to VehiStay Central Database</div>
+    </div>
+
+    <!-- 2. Result State (Injected dynamically) -->
+    <div id="verifyResult" style="display:none;">
+      <!-- Dynamic Banner -->
+      <div id="statusBanner" class="status-banner confirmed">
+        <div class="status-icon" id="statusIcon">🟢</div>
+        <div>
+          <div class="status-title" id="statusTitle">CONFIRMED / VALID PASS</div>
+          <div class="status-desc" id="statusDesc">Authorized for vehicle entry into designated bay.</div>
+        </div>
+      </div>
+
+      <!-- Detail Card (Strictly non-sensitive data) -->
+      <div class="details-card">
+        <div class="detail-row">
+          <span class="detail-label">Booking ID</span>
+          <span class="detail-value mono" id="valBookingId">VS-KNP-89410</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Designated Bay</span>
+          <span class="detail-value" id="valSlotCode" style="color:#38bdf8;">F1-A04</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Vehicle Plate</span>
+          <span class="detail-value plate" id="valPlate">MH 02 AB 1234</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Vehicle Type</span>
+          <span class="detail-value" id="valType" style="text-transform:capitalize;">Sedan</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Booking Schedule</span>
+          <span class="detail-value" id="valSchedule">Today • 09:00 AM - 11:00 AM</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Parking Location</span>
+          <span class="detail-value" id="valLocation">IIT Kanpur Main Smart Hub</span>
+        </div>
+        <div class="detail-row">
+          <span class="detail-label">Verification Time</span>
+          <span class="detail-value" id="valTimestamp" style="font-size:0.78rem; color:var(--text-muted);">Just now</span>
+        </div>
+      </div>
+
+      <!-- Anti-Reuse Gate Action -->
+      <div id="gateActionArea">
+        <button class="btn-gate-checkin" id="btnGateCheckin" onclick="handleGateCheckin()">
+          🟢 Authorize Gate Entry & Check In
+        </button>
+      </div>
+
+      <div style="display:flex; gap:0.5rem;">
+        <a href="index.html" class="btn-outline">
+          ← Return to VehiStay
+        </a>
+      </div>
+
+      <!-- Security Guarantee -->
+      <div class="security-guarantee">
+        🔒 <strong>Privacy & Security Shield Active:</strong><br>
+        Customer mobile phone, email, and security PIN are strictly concealed from scan results to ensure driver privacy and prevent credential theft.
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts: Supabase Universal Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase-config.js"></script>
+  <script src="./supabase-client.js"></script>
+
+  <script>
+    var currentBookingId = '';
+    var currentToken = '';
+
+    document.addEventListener('DOMContentLoaded', function() {
+      // Extract URL search parameters
+      var urlParams = new URLSearchParams(window.location.search);
+      currentBookingId = urlParams.get('bid') || urlParams.get('booking_id') || '';
+      currentToken = urlParams.get('token') || '';
+
+      if (!currentBookingId) {
+        showError('No Booking ID Provided', 'Scan a valid VehiStay QR code or provide a booking identifier in the URL.');
+        return;
+      }
+
+      runVerification(currentBookingId, currentToken);
+    });
+
+    async function runVerification(bid, token) {
+      try {
+        var result = null;
+
+        // 1. Try Supabase Universal Client
+        if (window.VehiStayDB && typeof window.VehiStayDB.verifyBookingToken === 'function') {
+          result = await window.VehiStayDB.verifyBookingToken(bid, token);
+        }
+
+        // 2. If not found or client offline, try Python server endpoint if accessible
+        if ((!result || !result.valid) && !window.location.protocol.startsWith('file')) {
+          try {
+            var fetchUrl = './api/verify-booking?bid=' + encodeURIComponent(bid) + '&token=' + encodeURIComponent(token);
+            var res = await fetch(fetchUrl);
+            if (res.ok) {
+              var json = await res.json();
+              if (json && json.valid) {
+                result = json;
+              }
+            }
+          } catch (e) {
+            // Ignore fetch error in static environment
+          }
+        }
+
+        if (result && result.valid && result.booking) {
+          renderSuccess(result.booking);
+        } else {
+          showError('Invalid or Forged Parking Pass', result && result.error ? result.error : 'This QR signature does not match any authenticated booking in the database.');
+        }
+      } catch (err) {
+        console.error('[Verification Error]:', err);
+        showError('Verification Error', err.message || 'Unable to complete verification check.');
+      }
+    }
+
+    function renderSuccess(b) {
+      document.getElementById('verifyLoading').style.display = 'none';
+      document.getElementById('verifyResult').style.display = 'block';
+
+      // Status Banner
+      var banner = document.getElementById('statusBanner');
+      var icon = document.getElementById('statusIcon');
+      var title = document.getElementById('statusTitle');
+      var desc = document.getElementById('statusDesc');
+      var checkinBtn = document.getElementById('btnGateCheckin');
+
+      banner.className = 'status-banner';
+
+      if (b.status === 'confirmed' || b.status === 'active') {
+        banner.classList.add('confirmed');
+        icon.textContent = '🟢';
+        title.textContent = 'CONFIRMED / ACTIVE PASS';
+        desc.textContent = 'Authorized for vehicle entry into designated parking bay.';
+        if (checkinBtn) {
+          checkinBtn.disabled = false;
+          checkinBtn.innerHTML = '🟢 Authorize Gate Entry & Check In';
+        }
+      } else if (b.status === 'completed' || b.status === 'used') {
+        banner.classList.add('completed');
+        icon.textContent = '🔵';
+        title.textContent = 'ALREADY USED / CHECKED IN';
+        desc.textContent = 'This parking pass has already been used for entry. Re-entry prevented.';
+        if (checkinBtn) {
+          checkinBtn.disabled = true;
+          checkinBtn.innerHTML = '🔒 Pass Already Checked In';
+        }
+      } else if (b.status === 'expired') {
+        banner.classList.add('expired');
+        icon.textContent = '🟡';
+        title.textContent = 'PARKING PASS EXPIRED';
+        desc.textContent = 'The scheduled date/time slot for this booking has elapsed.';
+        if (checkinBtn) {
+          checkinBtn.disabled = true;
+          checkinBtn.innerHTML = '⚠️ Pass Expired';
+        }
+      } else {
+        banner.classList.add('invalid');
+        icon.textContent = '🔴';
+        title.textContent = 'BOOKING CANCELLED';
+        desc.textContent = 'This reservation was cancelled by the driver or platform administrator.';
+        if (checkinBtn) {
+          checkinBtn.disabled = true;
+          checkinBtn.innerHTML = '❌ Cancelled Booking';
+        }
+      }
+
+      // Populate details
+      document.getElementById('valBookingId').textContent = b.booking_id;
+      document.getElementById('valSlotCode').textContent = b.slot_code || 'Bay Assigned';
+      document.getElementById('valPlate').textContent = b.vehicle_plate || 'Standard Plate';
+      document.getElementById('valType').textContent = b.vehicle_type || 'Car';
+      document.getElementById('valSchedule').textContent = (b.booking_date || '') + ' (' + (b.time_slot || '') + ')';
+      document.getElementById('valLocation').textContent = b.location_name || 'Central Campus Hub';
+      document.getElementById('valTimestamp').textContent = new Date().toLocaleTimeString() + ' • ' + new Date().toLocaleDateString();
+    }
+
+    function showError(titleText, descText) {
+      document.getElementById('verifyLoading').style.display = 'none';
+      document.getElementById('verifyResult').style.display = 'block';
+
+      var banner = document.getElementById('statusBanner');
+      banner.className = 'status-banner invalid';
+      document.getElementById('statusIcon').textContent = '🔴';
+      document.getElementById('statusTitle').textContent = titleText;
+      document.getElementById('statusDesc').textContent = descText;
+
+      document.getElementById('valBookingId').textContent = currentBookingId || 'UNKNOWN';
+      document.getElementById('valSlotCode').textContent = 'N/A';
+      document.getElementById('valPlate').textContent = 'UNVERIFIED';
+      document.getElementById('valType').textContent = 'N/A';
+      document.getElementById('valSchedule').textContent = 'No active reservation';
+      document.getElementById('valLocation').textContent = 'Unauthorized Gate';
+      document.getElementById('valTimestamp').textContent = new Date().toLocaleTimeString();
+
+      var btn = document.getElementById('btnGateCheckin');
+      if (btn) btn.style.display = 'none';
+    }
+
+    async function handleGateCheckin() {
+      var btn = document.getElementById('btnGateCheckin');
+      btn.disabled = true;
+      btn.innerHTML = '⏳ Authorizing Barrier Lift...';
+
+      try {
+        var res = null;
+        if (window.VehiStayDB && typeof window.VehiStayDB.checkInBooking === 'function') {
+          res = await window.VehiStayDB.checkInBooking(currentBookingId, currentToken);
+        }
+
+        if (!res && !window.location.protocol.startsWith('file')) {
+          var postRes = await fetch('./api/checkin-booking', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ bid: currentBookingId, token: currentToken })
+          });
+          if (postRes.ok) res = await postRes.json();
+        }
+
+        if (res && (res.success || res.valid)) {
+          alert('Gate Barrier Lifted! Vehicle Entry Authorized.\nBooking marked as used to prevent duplicate entry.');
+          runVerification(currentBookingId, currentToken);
+        } else {
+          alert(res && res.error ? res.error : 'Gate authorization failed.');
+          btn.disabled = false;
+          btn.innerHTML = '🟢 Authorize Gate Entry & Check In';
+        }
+      } catch (e) {
+        alert('Check-in error: ' + e.message);
+        btn.disabled = false;
+        btn.innerHTML = '🟢 Authorize Gate Entry & Check In';
+      }
+    }
+  </script>
+</body>
+</html>

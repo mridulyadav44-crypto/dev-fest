@@ -1,0 +1,1889 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>vehistay - find and book parking easily</title>
+  <meta name="description" content="vehistay - find and book parking easily. Discover our solutions, explore plans, schedule parking appointments, and access our interactive Smart Parking Suite.">
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- =========================================================================
+       1. Top Headline Bar (vehistay.odoo.com)
+       ========================================================================= -->
+  <div class="top-headline-bar">
+    <div class="headline-tagline">
+      &nbsp;find and book parking easily
+    </div>
+    <div class="headline-contact-info">
+      <a href="tel:+919935563971">📞 +91 8009003004</a>
+      <a href="mailto:xyx@gmail.com">✉️ mridulyadav44@gmail.com</a>
+      <a href="admin-login.html" title="Private Website Owner & Administrator Gateway" style="color:#38bdf8; font-weight:700; text-decoration:none; display:inline-flex; align-items:center; gap:0.25rem;">
+        🔐 Owner Portal
+      </a>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       2. Main Navigation Bar (With Sky Blue Find Parking Button & VehiStay Coupon)
+       ========================================================================= -->
+  <nav class="main-navbar">
+    <div class="navbar-container">
+      <!-- Brand Logo (With Website Owner Gateway inside the Logo) -->
+      <div style="display:flex; align-items:center; gap:0.4rem;">
+        <a href="#" class="brand-logo-wrap" onclick="VehiStayApp.navigate('home')">
+          <div class="brand-logo-icon">🚗</div>
+          <span>vehistay</span>
+        </a>
+        <a href="admin-login.html" class="owner-logo-portal" title="Website Owner & Administrator Gateway" style="text-decoration:none; font-size:0.85rem; padding:0.15rem 0.35rem; border-radius:6px; background:rgba(56, 189, 248, 0.1); border:1px solid rgba(56, 189, 248, 0.3); color:#38bdf8;" onmouseover="this.style.background='rgba(56, 189, 248, 0.25)'" onmouseout="this.style.background='rgba(56, 189, 248, 0.1)'">
+          🔐
+        </a>
+      </div>
+
+      <!-- Page Links -->
+      <ul class="nav-menu-list">
+        <li>
+          <a href="#home" class="nav-link-btn active" data-page="home">Home</a>
+        </li>
+        <li>
+          <!-- Prominent Sky Blue Parking Button in Navbar -->
+          <a href="#find-parking" class="nav-link-btn nav-find-parking-btn" data-page="find-parking">
+            🅿️ Find Parking
+          </a>
+        </li>
+        <li>
+          <!-- Register & Promote Parking Lot Button in Navbar -->
+          <a href="javascript:void(0)" class="nav-link-btn" onclick="VehiStayApp.openRegisterLotModal()" style="color:#34d399; font-weight:700;">
+            🏢 List Parking Lot
+          </a>
+        </li>
+        <li>
+          <a href="#services" class="nav-link-btn" data-page="services">All Services</a>
+        </li>
+        <li>
+          <a href="#appointment" class="nav-link-btn" data-page="appointment">Appointment</a>
+        </li>
+        <li>
+          <a href="#contact" class="nav-link-btn" data-page="contact">Contact Us</a>
+        </li>
+      </ul>
+
+      <!-- Action Items: Search, VehiStay Coupon Button, Sign in, Theme -->
+      <div class="navbar-actions">
+        <div class="search-input-group">
+          <input type="search" id="navbarGlobalSearch" placeholder="Search services...">
+          <button style="background:none; border:none; cursor:pointer;" onclick="VehiStayApp.handleSearch()">🔍</button>
+        </div>
+
+        <!-- VehiStay Coupon Button (In place of shopping cart) -->
+        <button class="btn-vehistay-coupon" id="btnOpenCoupon" onclick="VehiStayApp.openCouponModal()">
+          🎟️ VehiStay Coupon
+        </button>
+
+        <button class="btn btn-outline-primary" id="btnOpenLogin" style="padding: 0.4rem 1rem; font-size: 0.85rem;">
+          Sign in
+        </button>
+
+        <button class="action-icon-btn" id="btnToggleTheme" title="Toggle Light/Dark Theme">
+          🌓
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- =========================================================================
+       3. Main Page Views Container
+       ========================================================================= -->
+  <main>
+
+    <!-- =======================================================================
+         VIEW A: HOME PAGE (vehistay.odoo.com Homepage)
+         ======================================================================= -->
+    <div class="page-view active" id="viewHome">
+      
+      <!-- 1. Hero Discovery Section (with Select City & Find Parking) -->
+      <section class="hero-discovery-section">
+        <div class="container">
+          
+          <!-- Select City Portion Button (In place of What's new explore) -->
+          <div class="city-selector-badge-wrap">
+            <span>📍 City:</span>
+            <select class="city-select-dropdown" id="heroCitySelector" onchange="VehiStayApp.handleCityChange(this.value)">
+              <option value="Kanpur" selected>Kanpur (Uttar Pradesh)</option>
+              <option value="Varanasi">Varanasi (Uttar Pradesh)</option>
+              <option value="Lucknow">Lucknow (Uttar Pradesh)</option>
+              <option value="Delhi NCR">Delhi NCR (Capital Region)</option>
+              <option value="Mumbai">Mumbai (Maharashtra)</option>
+              <option value="Bengaluru">Bengaluru (Karnataka)</option>
+              <option value="Hyderabad">Hyderabad (Telangana)</option>
+              <option value="Pune">Pune (Maharashtra)</option>
+              <option value="Chennai">Chennai (Tamil Nadu)</option>
+              <option value="Kolkata">Kolkata (West Bengal)</option>
+              <option value="Ahmedabad">Ahmedabad (Gujarat)</option>
+              <option value="Jaipur">Jaipur (Rajasthan)</option>
+            </select>
+          </div>
+
+          <!-- Dynamic University & Famous Campus Hubs Bar -->
+          <div class="campus-hubs-bar" id="campusHubsBar">
+            <!-- Populated via JS based on selected city -->
+          </div>
+
+          <!-- Interactive Live Google Map Card for Selected Campus / Institution -->
+          <div class="campus-map-card" id="campusMapCard">
+            <div class="campus-map-header">
+              <div class="campus-map-title-wrap">
+                <div class="campus-map-badge" id="campusMapBadge">🎓 Premier Institute of National Importance</div>
+                <h3 class="campus-map-name" id="campusMapName">IIT Kanpur (Kalyanpur Main Campus)</h3>
+                <p class="campus-map-address" id="campusMapAddress">📍 Kalyanpur, Grand Trunk Road, Kanpur, Uttar Pradesh 208016</p>
+              </div>
+              <div class="campus-map-actions">
+                <a href="https://www.google.com/maps/search/?api=1&query=IIT+Kanpur+Kalyanpur+Kanpur" id="campusGoogleMapsExternalLink" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm">
+                  🗺️ Open in Google Maps ↗
+                </a>
+                <button class="btn btn-sky-blue btn-sm" onclick="VehiStayApp.bookForCampus()">
+                  🚗 Book Parking Here
+                </button>
+              </div>
+            </div>
+
+            <!-- Google Map Live Iframe Container -->
+            <div class="campus-map-frame-container">
+              <iframe 
+                id="campusGoogleMapIframe"
+                src="https://maps.google.com/maps?q=IIT%20Kanpur%2C%20Kalyanpur%2C%20Kanpur&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                frameborder="0" 
+                scrolling="no" 
+                marginheight="0" 
+                marginwidth="0"
+                loading="lazy"
+                title="Google Map of Selected Institution"
+                allowfullscreen>
+              </iframe>
+              <div class="campus-map-floating-pill">
+                <span class="live-dot"></span> <strong>Live Google Map</strong> • Click any institution above to explore
+              </div>
+            </div>
+
+            <div class="campus-map-footer">
+              <div class="campus-meta-item">
+                <span class="meta-label">Campus Gates:</span>
+                <strong class="meta-val" id="campusMapGates">Gate 1 (GT Road Main), Gate 2 (Nankari), Gate 3 (Hall 12)</strong>
+              </div>
+              <div class="campus-meta-item">
+                <span class="meta-label">VehiStay Smart Bays:</span>
+                <strong class="meta-val" id="campusMapSpots" style="color:var(--sky-blue-neon);">280+ Bays Available (ANPR Integrated)</strong>
+              </div>
+              <div class="campus-meta-item">
+                <span class="meta-label">EV Supercharger:</span>
+                <strong class="meta-val" id="campusMapEv" style="color:#10b981;">150 kW Fast-Charge Ready</strong>
+              </div>
+            </div>
+          </div>
+
+          <h1>Discover our solutions</h1>
+          <p class="lead">
+            Find and book parking easily across your city. Real-time space availability, automated ANPR gates, EV supercharging, and dedicated monthly spots.
+          </p>
+          
+          <div style="display: flex; justify-content: center; gap: 1rem; flex-wrap: wrap;">
+            <!-- Prominent Sky Blue "Find Parking" Button -->
+            <button class="btn btn-sky-blue btn-lg" onclick="VehiStayApp.navigate('find-parking')">
+              🅿️ Find Parking
+            </button>
+            <!-- Register & Promote Parking Lot Button -->
+            <button class="btn btn-register-lot btn-lg" onclick="VehiStayApp.openRegisterLotModal()">
+              🏢 Register Your Parking Area (List & Promote) ↗
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2. Image Showcase Grid (s_freegrid) -->
+      <section class="showcase-grid-section">
+        <div class="container">
+          <div class="showcase-masonry-grid">
+            <div class="grid-card-img tall">
+              <img src="smart_parking_bg.jpg" alt="Smart Parking Facility">
+              <div class="img-overlay-caption">Multi-Level Smart Parking Infrastructure</div>
+            </div>
+            <div class="grid-card-img">
+              <img src="smart_parking_bg.jpg" alt="EV Charging Station" style="object-position: top center;">
+              <div class="img-overlay-caption">EV Fast Charging Bays</div>
+            </div>
+            <div class="grid-card-img">
+              <img src="smart_parking_bg.jpg" alt="ANPR Automated Barriers" style="object-position: bottom center;">
+              <div class="img-overlay-caption">Automated ANPR Barrier Gates</div>
+            </div>
+            <div class="grid-card-img">
+              <img src="smart_parking_bg.jpg" alt="Urban Mobility" style="object-position: center left;">
+              <div class="img-overlay-caption">Seamless Driver Navigation</div>
+            </div>
+            <div class="grid-card-img">
+              <img src="smart_parking_bg.jpg" alt="Reserved Spots" style="object-position: center right;">
+              <div class="img-overlay-caption">Guaranteed Reserved Spots</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 2.5 Partner With Us / Landlord Promotion Banner -->
+      <section class="partner-banner-section">
+        <div class="container">
+          <div class="partner-promo-card">
+            <div class="partner-card-header">
+              <span class="partner-badge">🌟 FOR LANDOWNERS & PARKING OPERATORS</span>
+              <h2>Own a Parking Space, Basement, or Open Plot?</h2>
+              <p class="lead">
+                List your parking area on VehiStay and promote it directly to 50,000+ daily drivers, university students, and commuters in your city. Maximize your monthly earnings with zero setup hassle.
+              </p>
+            </div>
+            <div class="partner-highlights">
+              <div class="highlight-item">
+                <div class="highlight-icon">💰</div>
+                <div>
+                  <strong>Guaranteed Daily Revenue</strong>
+                  <p>Monetize empty bays with hourly & monthly subscriptions.</p>
+                </div>
+              </div>
+              <div class="highlight-item">
+                <div class="highlight-icon">📸</div>
+                <div>
+                  <strong>Automated ANPR & QR Gate</strong>
+                  <p>Instant contactless barrier entry and digital tracking.</p>
+                </div>
+              </div>
+              <div class="highlight-item">
+                <div class="highlight-icon">🗺️</div>
+                <div>
+                  <strong>Promoted on Google Maps</strong>
+                  <p>Top spot ranking for your campus & landmark vicinity.</p>
+                </div>
+              </div>
+              <div class="highlight-item">
+                <div class="highlight-icon">⚡</div>
+                <div>
+                  <strong>EV Supercharging Ready</strong>
+                  <p>Attract high-value electric vehicle drivers with EV bays.</p>
+                </div>
+              </div>
+            </div>
+            <div class="partner-card-footer">
+              <button class="btn btn-register-lot btn-lg" onclick="VehiStayApp.openRegisterLotModal()">
+                🏢 Register Your Parking Area Now (Free Listing) ➔
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3. Section Title & Floating Blocks (s_floating_blocks) -->
+      <section class="floating-cards-section">
+        <div class="container">
+          <div class="section-header-center">
+            <h2>Your section title</h2>
+            <p>Write one or two sentences about your services.</p>
+          </div>
+
+          <div class="floating-cards-wrapper">
+            <!-- Card 1 with Sky Blue "Find Parking" Button -->
+            <div class="floating-feature-card">
+              <div class="floating-card-content">
+                <p class="lead" style="color:#38bdf8;">Introducing</p>
+                <h2>Your New <br>Parking App</h2>
+                <p class="lead">Experience frictionless parking access with digital passes and instant reservations.</p>
+                <button class="btn btn-sky-blue btn-lg" onclick="VehiStayApp.navigate('find-parking')">
+                  🅿️ Find Parking
+                </button>
+              </div>
+            </div>
+
+            <!-- Card 2 with Sky Blue "Find Parking" Button -->
+            <div class="floating-feature-card">
+              <div class="floating-card-content">
+                <p class="lead" style="color:#4ade80;">Parking made simple.</p>
+                <h2>Park Into <br>Ease!</h2>
+                <p class="lead">Real-time space availability so you never have to circle around for a spot.</p>
+                <button class="btn btn-sky-blue btn-lg" onclick="VehiStayApp.navigate('find-parking')">
+                  🅿️ Find Parking
+                </button>
+              </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="floating-feature-card">
+              <div class="floating-card-content">
+                <h2>Park with ease</h2>
+                <p class="lead">Need a faster way to manage monthly parking?<br>It’s one of the ways we help drivers save time.</p>
+                <button class="btn btn-secondary btn-lg" onclick="VehiStayApp.navigate('contact')">Contact Us</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4. Announcement Marquee Scroll (s_announcement_scroll) -->
+      <section class="marquee-announcement-section">
+        <div class="marquee-track">
+          • Easy Booking • Secure payment • 24/7 Access • Real-Time Availability • Easy Parking Access • Easy Booking • Secure payment • 24/7 Access
+        </div>
+      </section>
+
+      <!-- 5. Numbers / Stats Grid (s_numbers_inline) -->
+      <section class="numbers-stats-section">
+        <div class="container">
+          <div class="stats-flex-grid">
+            <div class="stat-item-box">
+              <p class="stat-label">Useful options</p>
+              <p class="stat-number">12k</p>
+            </div>
+            <div class="stat-item-box">
+              <p class="stat-label">Find parking</p>
+              <p class="stat-number">45%</p>
+            </div>
+            <div class="stat-item-box">
+              <p class="stat-label">Amazing pages</p>
+              <p class="stat-number">8+</p>
+            </div>
+            <div class="stat-item-box">
+              <p class="stat-label">Parking Growth</p>
+              <p class="stat-number">15%</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 6. Our Team Section (s_company_team_spotlight) -->
+      <section class="team-section">
+        <div class="container">
+          <div class="section-header-center">
+            <h2>Our Team</h2>
+            <p>Write one or two sentences about your team.</p>
+          </div>
+
+          <div class="team-members-grid">
+            <div class="team-member-card">
+              <div class="team-avatar-img">👨‍💼</div>
+              <div class="card-body">
+                <h3>Tony Fred</h3>
+                <p>Chief Executive Officer</p>
+              </div>
+            </div>
+            <div class="team-member-card">
+              <div class="team-avatar-img">👨‍💻</div>
+              <div class="card-body">
+                <h3>Mich Stark</h3>
+                <p>Chief Technical Manager</p>
+              </div>
+            </div>
+            <div class="team-member-card">
+              <div class="team-avatar-img">👩‍💼</div>
+              <div class="card-body">
+                <h3>Aline Turner</h3>
+                <p>Chief Financial Officer</p>
+              </div>
+            </div>
+            <div class="team-member-card">
+              <div class="team-avatar-img">👩‍💻</div>
+              <div class="card-body">
+                <h3>Iris Joe</h3>
+                <p>Chief Operational Officer</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 7. Affordable Rates / Pricing Comparisons (In Rs.) -->
+      <section class="pricing-section">
+        <div class="container">
+          <div class="section-header-center">
+            <h2>Affordable rates</h2>
+            <p>Find parking plans, rates, and availability to see what fits your daily needs.</p>
+          </div>
+
+          <div class="pricing-grid">
+            <div class="pricing-plan-card">
+              <div>
+                <h3 class="plan-title">Starter</h3>
+                <div class="plan-cost-line">
+                  Rs. 1,200.00 <small>/ month</small>
+                </div>
+                <p class="plan-desc-text">Ideal for newcomers. Essential features to launch parking management and payments. Perfect for small teams.</p>
+                <button class="btn btn-outline-primary" style="width: 100%;" onclick="VehiStayApp.bookPlan('Starter Plan', 1200.00)">Choose Plan</button>
+                <ul class="plan-features-ul">
+                  <li class="check">Parking & mobility for all</li>
+                  <li class="check">Driver support</li>
+                  <li class="cross">No customization</li>
+                  <li class="cross">No support</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="pricing-plan-card" style="border-color: var(--sky-blue); box-shadow: var(--shadow-md);">
+              <div>
+                <h3 class="plan-title">Professional</h3>
+                <div class="plan-cost-line">
+                  Rs. 2,000.00 <small>/ month</small>
+                </div>
+                <p class="plan-desc-text">Comprehensive tools for parking operators. Optimize your processes and service across your city.</p>
+                <button class="btn btn-sky-blue" style="width: 100%;" onclick="VehiStayApp.bookPlan('Professional Plan', 2000.00)">Choose Plan</button>
+                <ul class="plan-features-ul">
+                  <li class="check">Smart parking for every driver</li>
+                  <li class="check">Access all zones</li>
+                  <li class="cross">Limited access</li>
+                  <li class="check">Email support</li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="pricing-plan-card">
+              <div>
+                <h3 class="plan-title">Trusted</h3>
+                <div class="plan-cost-line">
+                  Rs. 3,600.00 <small>/ month</small>
+                </div>
+                <p class="plan-desc-text">Smart parking platform for cities and drivers. Real-time spaces, easy payments, and reliable support.</p>
+                <button class="btn btn-outline-primary" style="width: 100%;" onclick="VehiStayApp.navigate('contact')">Contact Us</button>
+                <ul class="plan-features-ul">
+                  <li class="check">Smart parking solutions</li>
+                  <li class="check">All modules & features</li>
+                  <li class="check">Flexible booking</li>
+                  <li class="check">24/7 driver support</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 8. FAQ Collapse Accordion (s_faq_collapse) -->
+      <section class="faq-section">
+        <div class="container">
+          <div class="faq-row-layout">
+            <div>
+              <h2 style="font-size: 2rem; font-weight: 800;">Frequently asked questions</h2>
+              <p style="color:var(--text-muted); margin-top:0.5rem;">Find quick answers to common questions regarding bookings, payments, and driver assistance.</p>
+            </div>
+
+            <div class="faq-accordion-box">
+              <div class="accordion-item open">
+                <div class="accordion-header">
+                  <span>What parking services do you offer?</span>
+                  <span>▼</span>
+                </div>
+                <div class="accordion-body">
+                  Our company specializes in smart parking, space management, and driver support. We connect motorists with available parking across the city and country, helping reduce search time and improve mobility for everyone.
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <div class="accordion-header">
+                  <span>How can I contact customer support ?</span>
+                  <span>▼</span>
+                </div>
+                <div class="accordion-body">
+                  You can reach our customer support team by emailing mridulyadav44@gmail.com, calling +91 9935563971, or using the contact section on our website. Our dedicated team is available 24/7 to assist with any inquiries.
+                </div>
+              </div>
+
+              <div class="accordion-item">
+                <div class="accordion-header">
+                  <span>How do I book a parking spot?</span>
+                  <span>▼</span>
+                </div>
+                <div class="accordion-body">
+                  Bookings can be made directly via our Find Parking terminal or Appointment tab. You can reserve spots, select vehicle type, and receive a digital QR pass instantly.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- =======================================================================
+         VIEW B: FIND PARKING SUITE (Full Smart Parking System View - In Rs.)
+         ======================================================================= -->
+    <div class="page-view" id="viewFind-parking">
+      <div class="parking-suite-view">
+        <div class="container">
+          
+          <!-- Parking Suite Top Control Header -->
+          <div class="parking-suite-header">
+            <div>
+              <h2 style="font-size: 1.5rem; font-weight: 800; display:flex; align-items:center; gap:0.5rem;">
+                🅿️ VehiStay Live Parking Terminal
+              </h2>
+              <p style="color:#94a3b8; font-size:0.85rem;">Live IoT Telemetry • Automated ANPR Barriers • EV Charging Hub • Indoor Pathfinder</p>
+            </div>
+
+            <div class="parking-suite-actions">
+              <!-- Simulation Toggle -->
+              <button class="btn btn-secondary" id="simToggleBtn" style="padding:0.45rem 0.9rem; font-size:0.85rem;" onclick="ParkingEngine.toggleSim()">
+                ▶️ Start Live Sim
+              </button>
+
+              <!-- Quick Modals -->
+              <button class="btn btn-sky-blue" style="padding:0.45rem 0.9rem; font-size:0.85rem;" onclick="ParkingEngine.openBooking()">
+                🎟️ Book Spot
+              </button>
+              <button class="btn btn-secondary" style="padding:0.45rem 0.9rem; font-size:0.85rem;" onclick="ParkingEngine.openGateSim()">
+                🚗 Gate ANPR
+              </button>
+              <button class="btn btn-secondary" style="padding:0.45rem 0.9rem; font-size:0.85rem;" onclick="ParkingEngine.openFindCar()">
+                🔍 Find Car
+              </button>
+              <button class="btn btn-secondary" style="padding:0.45rem 0.9rem; font-size:0.85rem;" onclick="ParkingEngine.openEvHub()">
+                ⚡ EV Hub
+              </button>
+              <button class="btn btn-secondary" style="padding:0.45rem 0.9rem; font-size:0.85rem;" onclick="ParkingEngine.openAnalytics()">
+                📊 Analytics
+              </button>
+            </div>
+          </div>
+
+          <!-- KPI Summary Bar (In Rs.) -->
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-info">
+                <span class="kpi-label">Total Capacity</span>
+                <span class="kpi-value" id="kpiTotal">128</span>
+                <span class="kpi-sub">Across 4 Floors</span>
+              </div>
+              <div class="kpi-icon-wrap">🏢</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-info">
+                <span class="kpi-label">Available Slots</span>
+                <span class="kpi-value" id="kpiAvailable" style="color:var(--color-available);">--</span>
+                <span class="kpi-sub">Ready to park</span>
+              </div>
+              <div class="kpi-icon-wrap" style="color:var(--color-available);">🟢</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-info">
+                <span class="kpi-label">Occupied</span>
+                <span class="kpi-value" id="kpiOccupied" style="color:var(--color-occupied);">--</span>
+                <span class="kpi-sub">Vehicles parked</span>
+              </div>
+              <div class="kpi-icon-wrap" style="color:var(--color-occupied);">🔴</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-info">
+                <span class="kpi-label">Reserved</span>
+                <span class="kpi-value" id="kpiReserved" style="color:var(--color-reserved);">--</span>
+                <span class="kpi-sub">Pre-booked</span>
+              </div>
+              <div class="kpi-icon-wrap" style="color:var(--color-reserved);">🟡</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-info">
+                <span class="kpi-label">EV Supercharging</span>
+                <span class="kpi-value" id="kpiEv" style="color:var(--sky-blue);">--</span>
+                <span class="kpi-sub">Active fast charge</span>
+              </div>
+              <div class="kpi-icon-wrap" style="color:var(--sky-blue);">⚡</div>
+            </div>
+            <div class="kpi-card">
+              <div class="kpi-info">
+                <span class="kpi-label">Today's Revenue</span>
+                <span class="kpi-value" id="kpiRevenue" style="color:#6366f1;">Rs. 1,420.00</span>
+                <span class="kpi-sub">Live turnover</span>
+              </div>
+              <div class="kpi-icon-wrap">💵</div>
+            </div>
+          </div>
+
+          <!-- Floor Switcher & Filter Chips -->
+          <div class="controls-bar">
+            <div class="floor-tabs" id="floorTabsContainer">
+              <!-- Injected via JavaScript -->
+            </div>
+
+            <div class="filter-chips" id="filterChipsContainer">
+              <button class="filter-chip active" data-filter="all">All Spots</button>
+              <button class="filter-chip" data-filter="available">🟢 Available</button>
+              <button class="filter-chip" data-filter="occupied">🔴 Occupied</button>
+              <button class="filter-chip" data-filter="ev">⚡ EV Charger</button>
+              <button class="filter-chip" data-filter="accessible">♿ Accessible</button>
+              <button class="filter-chip" data-filter="vip">👑 VIP Lounge</button>
+            </div>
+
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <input type="text" class="form-control" id="spotSearchInput" placeholder="🔎 Search bay / plate..." style="width: 180px; padding: 0.35rem 0.75rem; font-size: 0.82rem;">
+            </div>
+          </div>
+
+          <!-- Arena Layout: Floor Map + Inspector & Feed -->
+          <div class="parking-arena-grid">
+            <div style="background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--radius-xl); padding:1.5rem; box-shadow:var(--shadow-sm); backdrop-filter:blur(10px);">
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
+                <h3 style="font-size:1.15rem; font-weight:800;">🗺️ Live 2D Parking Deck Blueprint</h3>
+                <div style="display:flex; gap:0.75rem; font-size:0.75rem; color:var(--text-muted); font-weight:600;">
+                  <span>🟢 Available</span>
+                  <span>🔴 Occupied</span>
+                  <span>🟡 Reserved</span>
+                  <span>⚡ EV Fast Charge</span>
+                </div>
+              </div>
+
+              <!-- Floor Blueprint Surface -->
+              <div class="floor-blueprint" id="floorBlueprintArea">
+                <svg id="navigationOverlay"></svg>
+                <div class="parking-zones" id="parkingZonesContainer">
+                  <!-- Populated dynamically via JS -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Side Cards -->
+            <aside>
+              <div class="side-card">
+                <div class="side-card-title">
+                  <span>🔍 Bay Inspector</span>
+                  <span style="font-size:0.75rem; color:var(--text-muted);">Live Sensor</span>
+                </div>
+                <div id="inspectorContent">
+                  <!-- Injected via JS -->
+                </div>
+              </div>
+
+              <div class="side-card">
+                <div class="side-card-title">
+                  <span>📡 IoT Event Feed</span>
+                  <span style="color:var(--color-available); font-size:0.75rem;">LIVE</span>
+                </div>
+                <div class="event-feed" id="eventFeedContainer">
+                  <!-- Injected via JS -->
+                </div>
+              </div>
+            </aside>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- =======================================================================
+         VIEW C: ALL SERVICES PAGE (In Rs.)
+         ======================================================================= -->
+    <div class="page-view" id="viewServices">
+      <div class="container" style="padding: 3.5rem 0 5rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:2rem; padding-bottom:1rem; border-bottom:1px solid var(--border-color); flex-wrap:wrap; gap:1rem;">
+          <div>
+            <h1 style="font-size: 1.8rem; font-weight: 800;">All Services</h1>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">Browse parking passes, reservations, and vehicle mobility services</p>
+          </div>
+
+          <div style="display: flex; gap: 1rem; align-items: center;">
+            <select class="form-control" id="servicesSortSelect" style="width: 180px;" onchange="VehiStayApp.sortServices()">
+              <option value="featured">Featured</option>
+              <option value="low">Price - Low to High</option>
+              <option value="high">Price - High to Low</option>
+              <option value="name">Name (A-Z)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap:1.75rem;" id="servicesGrid">
+          <!-- Populated via JavaScript -->
+        </div>
+      </div>
+    </div>
+
+    <!-- =======================================================================
+         VIEW D: APPOINTMENT PAGE (Customer & Driver Details)
+         ======================================================================= -->
+    <div class="page-view" id="viewAppointment">
+      <div class="container" style="padding: 3.5rem 0 5rem;">
+        <div class="appointment-form-card">
+          
+          <div style="text-align: center; margin-bottom: 2rem;">
+            <span class="cta-badge" style="border-color:var(--sky-blue); color:var(--sky-blue-neon);">📅 Online Driver & Spot Booking</span>
+            <h1 style="font-size: 2.2rem; font-weight: 800; margin-top: 0.5rem;">Schedule an Appointment</h1>
+            <p style="color: var(--text-muted);">Enter customer & driver vehicle details for priority verified parking access.</p>
+          </div>
+
+          <form id="appointmentForm" onsubmit="VehiStayApp.handleAppointmentSubmit(event)">
+            
+            <!-- SECTION 1: CUSTOMER DETAILS -->
+            <div class="form-section-header">
+              <span>👤 1. Customer Information</span>
+            </div>
+
+            <div class="form-grid-2">
+              <div>
+                <label class="form-label">Customer Full Name *</label>
+                <input type="text" class="form-control" placeholder="e.g. Rahul Sharma" required id="custName">
+              </div>
+
+              <div>
+                <label class="form-label">Customer Mobile Number (+91) *</label>
+                <input type="tel" class="form-control" placeholder="e.g. +91 98765 43210" required id="custPhone">
+              </div>
+
+              <div>
+                <label class="form-label">Email Address *</label>
+                <input type="email" class="form-control" placeholder="e.g. rahul.sharma@example.com" required id="custEmail">
+              </div>
+
+              <div>
+                <label class="form-label">City *</label>
+                <select class="form-control" required id="custCity" onchange="VehiStayApp.handleCustCityChange(this.value)">
+                  <option value="Kanpur" selected>Kanpur (Uttar Pradesh)</option>
+                  <option value="Varanasi">Varanasi (Uttar Pradesh)</option>
+                  <option value="Lucknow">Lucknow (Uttar Pradesh)</option>
+                  <option value="Delhi NCR">Delhi NCR (Capital Region)</option>
+                  <option value="Mumbai">Mumbai (Maharashtra)</option>
+                  <option value="Bengaluru">Bengaluru (Karnataka)</option>
+                  <option value="Hyderabad">Hyderabad (Telangana)</option>
+                  <option value="Pune">Pune (Maharashtra)</option>
+                  <option value="Chennai">Chennai (Tamil Nadu)</option>
+                  <option value="Kolkata">Kolkata (West Bengal)</option>
+                  <option value="Ahmedabad">Ahmedabad (Gujarat)</option>
+                  <option value="Jaipur">Jaipur (Rajasthan)</option>
+                </select>
+              </div>
+
+              <div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem;">
+                  <label class="form-label" style="margin-bottom:0;">Famous Location / University Campus Hub *</label>
+                  <button type="button" class="btn btn-outline-primary btn-sm" style="padding:0.15rem 0.6rem; font-size:0.75rem;" onclick="VehiStayApp.openCurrentCampusMap()">
+                    🗺️ View on Google Map
+                  </button>
+                </div>
+                <select class="form-control" required id="custLocationHub" onchange="VehiStayApp.handleLocationSelect(this.value)">
+                  <!-- Populated dynamically based on city -->
+                </select>
+              </div>
+
+              <div class="form-group-full">
+                <label class="form-label">Emergency Alternate Contact Number</label>
+                <input type="tel" class="form-control" placeholder="e.g. +91 91234 56789" id="custEmergencyPhone">
+              </div>
+            </div>
+
+            <!-- SECTION 2: DRIVER & VEHICLE DETAILS -->
+            <div class="form-section-header">
+              <span>🚗 2. Driver & Vehicle Information</span>
+            </div>
+
+            <div class="form-grid-3">
+              <div>
+                <label class="form-label">Driver Full Name *</label>
+                <input type="text" class="form-control" placeholder="e.g. Rahul Sharma" required id="driverName">
+              </div>
+
+              <div>
+                <label class="form-label">Driving License No. (DL No.) *</label>
+                <input type="text" class="form-control" placeholder="e.g. DL-1420110012345" required id="driverDlNo">
+              </div>
+
+              <div>
+                <label class="form-label">Vehicle Reg. Number (Plate No.) *</label>
+                <input type="text" class="form-control" placeholder="e.g. MH 02 AB 1234 / DL 3C AY 9988" required id="driverVehiclePlate">
+              </div>
+
+              <div>
+                <label class="form-label">Vehicle Category *</label>
+                <select class="form-control" required id="driverVehicleType">
+                  <option value="sedan">🚗 Standard Sedan</option>
+                  <option value="suv">🚙 SUV / 4x4 Truck</option>
+                  <option value="ev">⚡ Electric Vehicle (EV)</option>
+                  <option value="hatchback">🚘 Hatchback</option>
+                  <option value="bike">🏍️ Motorcycle / Two-Wheeler</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="form-label">Vehicle Make & Model</label>
+                <input type="text" class="form-control" placeholder="e.g. Tata Nexon EV / Hyundai Creta" id="driverVehicleModel">
+              </div>
+
+              <div>
+                <label class="form-label">Vehicle Color</label>
+                <input type="text" class="form-control" placeholder="e.g. Pearl White / Midnight Black" id="driverVehicleColor">
+              </div>
+            </div>
+
+            <!-- SECTION 3: PARKING SERVICE & TIME PREFERENCES -->
+            <div class="form-section-header">
+              <span>🅿️ 3. Service & Booking Preference</span>
+            </div>
+
+            <div class="form-grid-2">
+              <div>
+                <label class="form-label">Select Parking Service *</label>
+                <select class="form-control" required id="appService">
+                  <option value="Reserved Hourly Parking Space">Reserved Hourly Parking Space (Rs. 50.00/hr)</option>
+                  <option value="EV Fast-Charging & Park Bundle">EV Fast-Charging & Park Bundle (Rs. 350.00)</option>
+                  <option value="Monthly Dedicated Space Setup">Monthly Dedicated Space Setup (Rs. 1,200.00/mo)</option>
+                  <option value="Executive Valet Drop-off & Retrieval">Executive Valet Drop-off & Retrieval (Rs. 450.00)</option>
+                  <option value="Eco Car Wash & Detailing Addon">Eco Car Wash & Detailing Addon (Rs. 250.00)</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="form-label">Preferred Deck Floor</label>
+                <select class="form-control" id="appFloor">
+                  <option value="Floor 1 - Main & Accessible">Floor 1 - Main & Accessible</option>
+                  <option value="Floor 2 - EV Fast-Charge Hub">Floor 2 - EV Fast-Charge Hub</option>
+                  <option value="Floor 3 - Standard & Compact">Floor 3 - Standard & Compact</option>
+                  <option value="Floor 4 - Rooftop VIP Lounge">Floor 4 - Rooftop VIP Lounge</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="form-label">Appointment Date *</label>
+                <input type="date" class="form-control" required id="appDate">
+              </div>
+
+              <div>
+                <label class="form-label">Time Slot *</label>
+                <select class="form-control" required id="appTime">
+                  <option value="09:00 AM - 11:00 AM">09:00 AM - 11:00 AM</option>
+                  <option value="11:30 AM - 01:30 PM">11:30 AM - 01:30 PM</option>
+                  <option value="02:00 PM - 04:00 PM">02:00 PM - 04:00 PM</option>
+                  <option value="04:30 PM - 06:30 PM">04:30 PM - 06:30 PM</option>
+                  <option value="07:00 PM - 09:00 PM">07:00 PM - 09:00 PM</option>
+                </select>
+              </div>
+
+              <div class="form-group-full">
+                <label class="form-label">Special Driver Instructions / Requests</label>
+                <textarea class="form-control" placeholder="e.g. Near elevator, disability ramp access, EV charger type 2..." rows="3" id="appNotes"></textarea>
+              </div>
+            </div>
+
+            <div style="margin-top: 2rem;">
+              <button type="submit" class="btn btn-sky-blue btn-lg" style="width: 100%;">
+                Confirm Appointment & Generate Driver Pass ➔
+              </button>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- =======================================================================
+         VIEW E: CONTACT US PAGE (/contactus on vehistay.odoo.com)
+         ======================================================================= -->
+    <div class="page-view" id="viewContact">
+      <div class="container" style="padding: 3.5rem 0 5rem;">
+        <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 3rem; align-items: start;">
+          <div style="background: var(--bg-card); border: 1px solid var(--border-color); border-radius: var(--radius-xl); padding: 2.5rem; box-shadow: var(--shadow-md); backdrop-filter:blur(14px);">
+            <h1 style="font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem;">Contact us</h1>
+            <p class="lead" style="color: var(--text-muted); margin-bottom: 2rem;">
+              Contact us about anything related to our company or services.
+            </p>
+
+            <form id="contactForm" onsubmit="VehiStayApp.handleContactSubmit(event)">
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div>
+                  <label class="form-label">Name *</label>
+                  <input type="text" class="form-control" placeholder="Rahul Sharma" required id="cName">
+                </div>
+                <div>
+                  <label class="form-label">Phone Number</label>
+                  <input type="tel" class="form-control" placeholder="+91 9935563971" id="cPhone">
+                </div>
+                <div>
+                  <label class="form-label">Email *</label>
+                  <input type="email" class="form-control" placeholder="example@mail.com" required id="cEmail">
+                </div>
+                <div>
+                  <label class="form-label">Company</label>
+                  <input type="text" class="form-control" placeholder="ACME Corp" id="cCompany">
+                </div>
+                <div style="grid-column: span 2;">
+                  <label class="form-label">Subject *</label>
+                  <input type="text" class="form-control" placeholder="Describe your request" required id="cSubject">
+                </div>
+                <div style="grid-column: span 2;">
+                  <label class="form-label">Message *</label>
+                  <textarea class="form-control" placeholder="Write down your message" rows="5" required id="cMessage"></textarea>
+                  <small style="color: var(--text-muted); display: block; margin-top: 0.35rem;">We typically respond within 1-2 business days.</small>
+                </div>
+                <div style="grid-column: span 2; text-align: right; margin-top: 1rem;">
+                  <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+          <div style="background: var(--bg-card); border-radius: var(--radius-xl); padding: 2.5rem; border: 1px solid var(--border-color); backdrop-filter:blur(14px);">
+            <h3 style="font-size: 1.4rem; font-weight: 800; margin-bottom: 1rem;">Direct Contact</h3>
+            <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 1.5rem;">
+              Get in touch directly with our dispatch and customer support teams 24 hours a day, 7 days a week.
+            </p>
+
+            <div style="display: flex; flex-direction: column; gap: 1rem; font-size: 0.95rem;">
+              <div>
+                <strong>📞 Phone Helpline:</strong><br>
+                <a href="tel:+919935563971">+91 9935563971</a> / 955213162
+              </div>
+              <div>
+                <strong>✉️ Email Support:</strong><br>
+                <a href="mailto:mridulyadav44@gmail.com">mridulyadav44@gmail.com</a>
+              </div>
+              <div>
+                <strong>📍 Location:</strong><br>
+                vehistay Hub, Smart City Tech Center, India
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div style="background: rgba(10, 14, 23, 0.95); color: #fff; padding: 3.5rem 1.5rem; text-align: center; border-radius: var(--radius-xl); margin: 3.5rem 0; border: 1px solid var(--border-color); backdrop-filter:blur(10px);">
+          <h2 style="font-size: 2.5rem; font-weight: 800; margin-bottom: 0.5rem;">50,000+ companies use our services <br>to grow their businesses.</h2>
+          <p style="color: #cbd5e1; font-size: 1.15rem;">Join us and make your company a better place.</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- =========================================================================
+       4. Footer (Exact from vehistay.odoo.com)
+       ========================================================================= -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h5>Useful Links</h5>
+        <ul class="footer-links-list">
+          <li><a href="#home" onclick="VehiStayApp.navigate('home')">Home</a></li>
+          <li><a href="#find-parking" onclick="VehiStayApp.navigate('find-parking')">Find Parking</a></li>
+          <li><a href="#services" onclick="VehiStayApp.navigate('services')">All Services</a></li>
+          <li><a href="#appointment" onclick="VehiStayApp.navigate('appointment')">Appointment</a></li>
+          <li><a href="#contact" onclick="VehiStayApp.navigate('contact')">Contact us</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h5>About us</h5>
+        <p>
+          We are a team of passionate people whose goal is to make parking simpler for everyone. We build smart solutions to solve daily parking challenges. <br><br>
+          Our services are designed for drivers, businesses, and cities looking to improve mobility.
+        </p>
+      </div>
+
+      <div class="footer-col">
+        <h5>Connect with us</h5>
+        <ul class="footer-contact-list">
+          <li>💬 <a href="#contact" onclick="VehiStayApp.navigate('contact')">Contact us</a></li>
+          <li>📞 9935563971, 955213162</li>
+          <li>✉️ mridulyadav44@gmail.com</li>
+        </ul>
+
+        <div style="display:flex; gap:0.75rem; margin-top:1.25rem;">
+          <span style="font-size:1.4rem;">🌐</span>
+          <span style="font-size:1.4rem;">📱</span>
+          <span style="font-size:1.4rem;">💬</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-bottom-copy">
+      <div>Copyright &copy; <span>vehistay</span></div>
+      <div>Powered by <strong>Odoo</strong> - The #1 Open Source eCommerce</div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       5. VehiStay Coupon Modal (In place of shopping cart)
+       ========================================================================= -->
+  <div class="modal-backdrop" id="couponModal">
+    <div class="modal-dialog large-modal">
+      <div class="modal-header">
+        <div class="modal-title">🎟️ Active VehiStay Promo Coupons & Discounts</div>
+        <button class="modal-close" onclick="VehiStayApp.closeModals()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="color:var(--text-muted); font-size:0.9rem; margin-bottom:0.5rem;">
+          Apply these verified discount codes during booking or show at the ANPR gate checkout kiosk!
+        </p>
+
+        <div class="coupon-grid">
+          <!-- Coupon 1 -->
+          <div class="coupon-card">
+            <div>
+              <div class="coupon-badge-title">🎉 PARK20</div>
+              <div class="coupon-desc">Get Flat 20% OFF on all standard hourly parking passes across all city decks.</div>
+            </div>
+            <div class="coupon-code-row">
+              <span class="coupon-code-text">PARK20</span>
+              <button class="btn btn-sky-blue" style="padding:0.25rem 0.75rem; font-size:0.78rem;" onclick="VehiStayApp.applyCoupon('PARK20', 20)">Copy & Apply</button>
+            </div>
+          </div>
+
+          <!-- Coupon 2 -->
+          <div class="coupon-card">
+            <div>
+              <div class="coupon-badge-title">💰 VEHISTAY50</div>
+              <div class="coupon-desc">Flat Rs. 50 Instant Discount on appointments & valet bookings.</div>
+            </div>
+            <div class="coupon-code-row">
+              <span class="coupon-code-text">VEHISTAY50</span>
+              <button class="btn btn-sky-blue" style="padding:0.25rem 0.75rem; font-size:0.78rem;" onclick="VehiStayApp.applyCoupon('VEHISTAY50', 50)">Copy & Apply</button>
+            </div>
+          </div>
+
+          <!-- Coupon 3 -->
+          <div class="coupon-card">
+            <div>
+              <div class="coupon-badge-title">⚡ EVCHARGE100</div>
+              <div class="coupon-desc">Save Rs. 100 on EV Supercharging Hub 150 kW DC fast charges.</div>
+            </div>
+            <div class="coupon-code-row">
+              <span class="coupon-code-text">EVCHARGE100</span>
+              <button class="btn btn-sky-blue" style="padding:0.25rem 0.75rem; font-size:0.78rem;" onclick="VehiStayApp.applyCoupon('EVCHARGE100', 100)">Copy & Apply</button>
+            </div>
+          </div>
+
+          <!-- Coupon 4 -->
+          <div class="coupon-card">
+            <div>
+              <div class="coupon-badge-title">🏢 MONTHLY500</div>
+              <div class="coupon-desc">Flat Rs. 500 OFF on your first month dedicated personal parking spot.</div>
+            </div>
+            <div class="coupon-code-row">
+              <span class="coupon-code-text">MONTHLY500</span>
+              <button class="btn btn-sky-blue" style="padding:0.25rem 0.75rem; font-size:0.78rem;" onclick="VehiStayApp.applyCoupon('MONTHLY500', 500)">Copy & Apply</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-sky-blue" onclick="VehiStayApp.closeModals()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       6. Integrated Parking Modals (Booking, Gate, Find Car, EV, Analytics)
+       ========================================================================= -->
+
+  <!-- Spot Booking Modal (In Rs.) -->
+  <div class="modal-backdrop" id="bookingModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title">🎟️ Spot Reservation</div>
+        <button class="modal-close" onclick="ParkingEngine.closeModals()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="margin-bottom:0.75rem;">
+          <label class="form-label">Select Bay</label>
+          <select class="form-control" id="bookSlotSelect"></select>
+        </div>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-bottom:0.75rem;">
+          <div>
+            <label class="form-label">Vehicle Plate No.</label>
+            <input type="text" class="form-control" id="bookPlateInput" value="DL 3C AY 9988">
+          </div>
+          <div>
+            <label class="form-label">Driver Name</label>
+            <input type="text" class="form-control" id="bookDriverInput" value="Rahul Sharma">
+          </div>
+        </div>
+        <div style="margin-bottom:0.75rem;">
+          <label class="form-label">Vehicle Type</label>
+          <select class="form-control" id="bookVehicleType">
+            <option value="sedan">🚗 Standard Sedan</option>
+            <option value="suv">🚙 SUV / 4x4 Truck</option>
+            <option value="ev">⚡ Electric Vehicle (EV)</option>
+            <option value="bike">🏍️ Motorcycle</option>
+          </select>
+        </div>
+        <div style="margin-bottom:0.75rem;">
+          <label class="form-label">Duration (Hours)</label>
+          <input type="range" id="bookDurationSlider" min="1" max="12" value="2" style="width:100%; accent-color:var(--sky-blue);">
+          <div style="display:flex; justify-content:space-between; font-size:0.75rem; color:var(--text-muted);">
+            <span>1 hr</span>
+            <span id="bookDurationVal" style="font-weight:700; color:var(--sky-blue);">2 Hours</span>
+            <span>12 hrs</span>
+          </div>
+        </div>
+        <div style="background:var(--bg-alt); padding:0.75rem; border-radius:var(--radius-md); font-size:0.85rem;">
+          <div style="display:flex; justify-content:space-between;"><span>Estimated Total:</span><strong id="bookPriceTotal" style="color:var(--sky-blue-neon); font-size:1.1rem;">Rs. 100.00</strong></div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline-primary" onclick="ParkingEngine.closeModals()">Cancel</button>
+        <button class="btn btn-sky-blue" onclick="ParkingEngine.confirmBooking()">Confirm & Generate Pass ➔</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Digital QR Ticket Modal -->
+  <div class="modal-backdrop" id="ticketModal">
+    <div class="modal-dialog" style="max-width: 460px;">
+      <div class="modal-header">
+        <div class="modal-title">🎟️ Digital Parking Pass</div>
+        <button class="modal-close" onclick="ParkingEngine.closeModals()">&times;</button>
+      </div>
+      <div class="modal-body" style="text-align:center;">
+        <div style="background:#0f172a; color:#fff; padding:1.5rem; border-radius:var(--radius-lg); border:1px solid var(--border-color); box-shadow:0 10px 30px rgba(0,0,0,0.5);">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
+            <span style="font-size:0.7rem; background:rgba(16,185,129,0.15); color:#10b981; border:1px solid rgba(16,185,129,0.3); padding:0.15rem 0.5rem; border-radius:10px; font-weight:700;">● VERIFIED PASS</span>
+            <span style="font-size:0.8rem; color:var(--sky-blue); font-family:var(--font-mono); font-weight:700;" id="ticketPassId">VS-A89410</span>
+          </div>
+          <h3 style="margin:0.25rem 0 0.85rem; letter-spacing:0.5px;">VEHISTAY SMART PASS</h3>
+
+          <!-- QR Code Container (Responsive & Prevents Duplicates) -->
+          <div id="ticketQrWrapper" style="background:#fff; display:inline-flex; align-items:center; justify-content:center; padding:0.75rem; border-radius:var(--radius-md); box-shadow:0 4px 15px rgba(0,0,0,0.3); min-width:180px; min-height:180px; position:relative;">
+            <canvas id="ticketQrCanvas" width="180" height="180" style="display:block; max-width:100%; height:auto;"></canvas>
+          </div>
+          <div style="font-size:0.75rem; color:var(--text-muted); margin-top:0.45rem;">
+            📷 Scan with phone camera to verify booking
+          </div>
+
+          <!-- All 7 Pre-Booking Confirmation Elements -->
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.6rem; margin-top:1rem; font-size:0.82rem; text-align:left; border-top:1px dashed #334155; padding-top:0.85rem;">
+            <div><span style="color:#94a3b8; font-size:0.75rem; display:block;">PARKING BAY:</span> <strong id="ticketSlotId" style="color:var(--sky-blue); font-size:0.95rem;">F1-A04</strong></div>
+            <div><span style="color:#94a3b8; font-size:0.75rem; display:block;">VEHICLE NUMBER:</span> <strong id="ticketPlate" style="color:#fff; font-family:var(--font-mono);">DL 3C AY 9988</strong></div>
+            <div><span style="color:#94a3b8; font-size:0.75rem; display:block;">SECURITY PIN:</span> <strong id="ticketPin" style="color:#10b981; font-family:var(--font-mono); font-size:0.95rem;">4821</strong></div>
+            <div><span style="color:#94a3b8; font-size:0.75rem; display:block;">PARKING DURATION:</span> <strong id="ticketDuration">2 Hours</strong></div>
+            <div><span style="color:#94a3b8; font-size:0.75rem; display:block;">BOOKING DATE & TIME:</span> <strong id="ticketDateTime">Today (09:00 AM - 11:00 AM)</strong></div>
+            <div><span style="color:#94a3b8; font-size:0.75rem; display:block;">PARKING CHARGES:</span> <strong id="ticketCharges" style="color:var(--sky-blue);">Rs. 150.00</strong></div>
+            <div style="grid-column: span 2;"><span style="color:#94a3b8; font-size:0.75rem; display:block;">PARKING LOCATION:</span> <strong id="ticketLocation" style="color:var(--sky-blue-neon);">IIT Kanpur Main Smart Hub</strong></div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="display:flex; justify-content:space-between; align-items:center; gap:0.5rem; flex-wrap:wrap;">
+        <button class="btn btn-outline-primary btn-sm" id="btnDownloadQrPass" onclick="VehiStayApp.downloadQrPass()">
+          📥 Download QR Pass
+        </button>
+        <button class="btn btn-outline-primary btn-sm" id="btnTestVerifyPass" onclick="VehiStayApp.testScanPass()">
+          🔍 Test Scan / Verify
+        </button>
+        <button class="btn btn-sky-blue btn-sm" onclick="ParkingEngine.closeModals()">
+          Done
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ANPR Gate & Kiosk Simulator Modal -->
+  <div class="modal-backdrop" id="gateModal">
+    <div class="modal-dialog large-modal">
+      <div class="modal-header">
+        <div class="modal-title">🚗 ANPR Gate Barrier & Checkout Terminal</div>
+        <button class="modal-close" onclick="ParkingEngine.closeModals()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="display:flex; gap:0.5rem; margin-bottom:1rem;">
+          <button class="btn btn-sky-blue" id="btnGateTabEntry" onclick="ParkingEngine.switchGateTab('entry')" style="flex:1;">🟢 Entry OCR Scan</button>
+          <button class="btn btn-outline-primary" id="btnGateTabExit" onclick="ParkingEngine.switchGateTab('exit')" style="flex:1;">🔴 Exit & Pay</button>
+        </div>
+
+        <div id="gateEntrySection">
+          <div style="display:grid; grid-template-columns:1.1fr 0.9fr; gap:1.25rem;">
+            <div class="gate-visual-stage">
+              <div style="font-size:0.7rem; color:#ef4444; font-family:var(--font-mono);">● ANPR OCR CAM #01 - LIVE</div>
+              <div class="scan-target-box"><div class="scan-line-laser"></div></div>
+              <div style="background:#000; color:#10b981; font-family:var(--font-mono); font-size:0.75rem; text-align:center; padding:0.25rem; border-radius:4px;" id="entryGateLed">
+                DETECTING VEHICLE PLATE...
+              </div>
+              <div class="barrier-rig" id="entryBarrierRig"><div class="barrier-housing"></div><div class="barrier-arm"></div></div>
+            </div>
+
+            <div>
+              <label class="form-label">Incoming Vehicle Plate</label>
+              <div style="display:flex; gap:0.5rem; margin-bottom:0.75rem;">
+                <input type="text" class="form-control" id="gatePlateInput" value="MH 02 AB 1234">
+                <button class="btn btn-outline-primary" onclick="ParkingEngine.randomPlate()">🎲</button>
+              </div>
+              <label class="form-label">Vehicle Category</label>
+              <select class="form-control" id="gateVehicleCategory" style="margin-bottom:1rem;">
+                <option value="sedan">Sedan</option>
+                <option value="suv">SUV</option>
+                <option value="ev">EV</option>
+                <option value="bike">Motorcycle</option>
+              </select>
+              <button class="btn btn-sky-blue" style="width:100%;" onclick="ParkingEngine.scanAndOpenEntry()">
+                📸 Scan Plate & Lift Barrier
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div id="gateExitSection" style="display:none;">
+          <div style="display:grid; grid-template-columns:1.1fr 0.9fr; gap:1.25rem;">
+            <div class="gate-visual-stage">
+              <div style="font-size:0.7rem; color:#ef4444; font-family:var(--font-mono);">● EXIT TERMINAL #02</div>
+              <div style="background:#000; color:#10b981; font-family:var(--font-mono); font-size:0.75rem; text-align:center; padding:0.25rem; border-radius:4px;" id="exitGateLed">
+                SCAN TICKET / PLATE...
+              </div>
+              <div class="barrier-rig" id="exitBarrierRig"><div class="barrier-housing"></div><div class="barrier-arm"></div></div>
+            </div>
+
+            <div>
+              <label class="form-label">Select Departing Car</label>
+              <select class="form-control" id="gateExitSelect" style="margin-bottom:0.75rem;"></select>
+              <div style="background:var(--bg-alt); padding:0.75rem; border-radius:var(--radius-md); margin-bottom:1rem; font-size:0.85rem;">
+                <div style="display:flex; justify-content:space-between;"><span>Calculated Fee:</span><strong id="exitFeeVal" style="color:var(--sky-blue-neon); font-size:1.1rem;">Rs. 100.00</strong></div>
+              </div>
+              <button class="btn btn-sky-blue" style="width:100%;" onclick="ParkingEngine.processExitPay()">
+                💳 Pay & Lift Exit Barrier
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Find My Car Modal -->
+  <div class="modal-backdrop" id="findCarModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title">🔍 Find My Vehicle & Navigator</div>
+        <button class="modal-close" onclick="ParkingEngine.closeModals()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <label class="form-label">Enter License Plate or Ticket ID</label>
+        <div style="display:flex; gap:0.5rem; margin-bottom:1rem;">
+          <input type="text" class="form-control" id="findCarQuery" placeholder="e.g. MH 02 AB 1234">
+          <button class="btn btn-sky-blue" onclick="ParkingEngine.locateCar()">Search</button>
+        </div>
+        <div id="findCarResult">
+          <p style="text-align:center; color:var(--text-muted); font-size:0.85rem;">Type your vehicle plate to locate your spot and draw walking route.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- EV Hub Modal -->
+  <div class="modal-backdrop" id="evHubModal">
+    <div class="modal-dialog large-modal">
+      <div class="modal-header">
+        <div class="modal-title">⚡ EV Supercharging Hub</div>
+        <button class="modal-close" onclick="ParkingEngine.closeModals()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.75rem;" id="evChargersList"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Operator Analytics Modal -->
+  <div class="modal-backdrop" id="analyticsModal">
+    <div class="modal-dialog large-modal">
+      <div class="modal-header">
+        <div class="modal-title">📊 Operator Analytics & KPIs</div>
+        <button class="modal-close" onclick="ParkingEngine.closeModals()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="background:var(--bg-alt); padding:1rem; border-radius:var(--radius-lg); margin-bottom:1rem;">
+          <h4 style="font-size:0.95rem; font-weight:700; margin-bottom:0.5rem;">Occupancy & Inflow Trend (24h)</h4>
+          <canvas id="analyticsChart" width="500" height="180" style="width:100%;"></canvas>
+        </div>
+        <button class="btn btn-outline-primary" style="color:var(--color-occupied); border-color:var(--color-occupied); width:100%;" onclick="ParkingEngine.emergencyEvacuate()">
+          🚨 Emergency Evacuation Override (Lift All Barriers)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sign In Modal -->
+  <div class="modal-backdrop" id="loginModal">
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <div class="modal-title">Sign in to vehistay</div>
+        <button class="modal-close" onclick="VehiStayApp.closeModals()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <form onsubmit="VehiStayApp.handleLogin(event)">
+          <div style="margin-bottom: 1rem;">
+            <label class="form-label">Email</label>
+            <input type="email" class="form-control" required placeholder="your.email@domain.com">
+          </div>
+          <div style="margin-bottom: 1.25rem;">
+            <label class="form-label">Password</label>
+            <input type="password" class="form-control" required placeholder="••••••••">
+          </div>
+          <button type="submit" class="btn btn-sky-blue" style="width: 100%;">Sign in</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Dedicated Full Campus Google Map Modal -->
+  <div class="modal-backdrop" id="campusMapModal">
+    <div class="modal-dialog large-modal" style="max-width:850px;">
+      <div class="modal-header">
+        <div class="modal-title" id="modalMapTitle">🗺️ Campus Google Map & Navigation</div>
+        <button class="modal-close" onclick="VehiStayApp.closeModals()">&times;</button>
+      </div>
+      <div class="modal-body" style="padding:0;">
+        <div style="height:420px; width:100%; position:relative; background:#0b1120;">
+          <iframe 
+            id="modalMapIframe"
+            src="" 
+            style="width:100%; height:100%; border:none;" 
+            loading="lazy"
+            title="Full Google Map View"
+            allowfullscreen>
+          </iframe>
+        </div>
+        <div style="padding:1rem 1.25rem; background:var(--bg-alt); display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem;">
+          <div>
+            <strong id="modalMapAddress" style="display:block; font-size:0.9rem; color:var(--text-main);">IIT Kanpur Main Campus, Kalyanpur, Kanpur</strong>
+            <span id="modalMapMeta" style="font-size:0.8rem; color:var(--text-muted);">Gate 1 Main Entrance • 280+ VehiStay Parking Bays</span>
+          </div>
+          <div style="display:flex; gap:0.5rem;">
+            <a href="#" id="modalMapExternalLink" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm">
+              🗺️ Open in Google Maps App ↗
+            </a>
+            <button class="btn btn-sky-blue btn-sm" onclick="VehiStayApp.bookForCampus()">
+              🚗 Reserve Spot Here
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Comprehensive Landowner & Parking Operator Registration Modal -->
+  <div class="modal-backdrop" id="registerLotModal">
+    <div class="modal-dialog large-modal" style="max-width: 780px;">
+      <div class="modal-header" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.2)); border-bottom: 1.5px solid rgba(52, 211, 153, 0.4);">
+        <div>
+          <div class="modal-title" style="color:#34d399; display:flex; align-items:center; gap:0.5rem; font-size:1.25rem;">
+            🏢 Landowner & Parking Operator Registration Portal
+          </div>
+          <p style="margin:0.25rem 0 0; font-size:0.82rem; color:var(--text-muted);">
+            Official partner onboarding form. Data is securely verified and transmitted directly to the Website Owner & Administration.
+          </p>
+        </div>
+        <button class="modal-close" onclick="VehiStayApp.closeModals()">&times;</button>
+      </div>
+      <div class="modal-body" style="max-height: 78vh; overflow-y: auto; padding: 1.5rem;">
+        
+        <!-- Admin Notice Banner -->
+        <div class="admin-transmission-banner">
+          <div style="font-size:1.3rem;">🛡️</div>
+          <div>
+            <strong>Direct Platform Admin Transmission:</strong> All registration submissions are logged, verified, and sent to VehiStay Admin (<a href="mailto:mridulyadav44@gmail.com" style="color:#38bdf8; text-decoration:underline;">mridulyadav44@gmail.com</a> / <a href="tel:+919935563971" style="color:#34d399; text-decoration:none;">+91 9935563971</a>) for instant partner contract generation.
+          </div>
+        </div>
+
+        <form id="registerLotForm" onsubmit="VehiStayApp.handleRegisterLotSubmit(event)">
+          
+          <!-- SECTION 1: LANDOWNER / TITLE HOLDER DETAILS -->
+          <div class="form-section-card">
+            <div class="form-section-title">
+              <span>🏛️ 1. Landowner & Property Title Holder Details</span>
+              <span class="form-section-subtitle">* Required for legal title & payouts</span>
+            </div>
+            
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.85rem;">
+              <div>
+                <label class="form-label">Landowner / Entity Legal Name *</label>
+                <input type="text" class="form-control" id="lotLandownerName" required placeholder="e.g. Vikramaditya Singhania / Prime Infra">
+              </div>
+              <div>
+                <label class="form-label">Ownership Entity Type *</label>
+                <select class="form-control" id="lotLandownerType" required>
+                  <option value="Individual Private Landowner" selected>Individual Private Landowner</option>
+                  <option value="Commercial Real Estate Developer">Commercial Real Estate Developer</option>
+                  <option value="Educational Institution / Trust">Educational Institution / Trust</option>
+                  <option value="Commercial Mall / Hospital / Hotel">Commercial Mall / Hospital / Hotel</option>
+                  <option value="Resident Welfare Association (RWA)">Resident Welfare Association (RWA)</option>
+                  <option value="Government / PSU / Transit Hub">Government / PSU / Transit Hub</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.85rem; margin-top:0.85rem;">
+              <div>
+                <label class="form-label">Govt ID / Proof of Ownership Type *</label>
+                <select class="form-control" id="lotLandownerIdType" required>
+                  <option value="Aadhaar Card" selected>Aadhaar Card (UIDAI)</option>
+                  <option value="PAN Card">PAN Card (Income Tax Dept)</option>
+                  <option value="Property Tax Assessment ID">Property Tax Assessment ID</option>
+                  <option value="Land Registry Deed / Khasra No.">Land Registry Deed / Khasra No.</option>
+                  <option value="GSTIN Registration Certificate">GSTIN Registration Certificate</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label">Govt ID / Registry Document Number *</label>
+                <input type="text" class="form-control" id="lotLandownerIdNumber" required placeholder="e.g. ABCD1234E / 9876-5432-1098">
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.85rem; margin-top:0.85rem;">
+              <div>
+                <label class="form-label">Landowner Direct Mobile Number (+91) *</label>
+                <input type="tel" class="form-control" id="lotLandownerPhone" required placeholder="+91 99355 63971">
+              </div>
+              <div>
+                <label class="form-label">Landowner Official Email Address *</label>
+                <input type="email" class="form-control" id="lotLandownerEmail" required placeholder="landowner@domain.com">
+              </div>
+            </div>
+
+            <div style="margin-top:0.85rem;">
+              <label class="form-label">Landowner Permanent Residential / Corporate Address *</label>
+              <input type="text" class="form-control" id="lotLandownerAddress" required placeholder="e.g. 14/112, Civil Lines, Kanpur, UP 208001">
+            </div>
+          </div>
+
+          <!-- SECTION 2: PARKING OPERATOR / FACILITY MANAGER DETAILS -->
+          <div class="form-section-card">
+            <div class="form-section-title">
+              <span>👷 2. Parking Operator & Facility Manager Details</span>
+              <span class="form-section-subtitle">* Ground operations & supervision</span>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.85rem;">
+              <div>
+                <label class="form-label">Operational Management Model *</label>
+                <select class="form-control" id="lotOperatorType" onchange="VehiStayApp.handleOperatorTypeChange(this.value)" required>
+                  <option value="Self-Operated by Landowner" selected>Self-Operated directly by Landowner</option>
+                  <option value="Third-Party Parking Management Agency">Third-Party Parking Management Agency</option>
+                  <option value="Facility Management Contractor">Facility Management Contractor</option>
+                  <option value="VehiStay Fully Managed Operations">Request VehiStay to Manage Operations</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label">Operator Agency / Company Name (if any)</label>
+                <input type="text" class="form-control" id="lotOperatorAgencyName" placeholder="e.g. SafePark Operations Pvt Ltd / Self">
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.85rem; margin-top:0.85rem;">
+              <div>
+                <label class="form-label">On-Site Facility Manager / Supervisor Name *</label>
+                <input type="text" class="form-control" id="lotOperatorManagerName" required placeholder="e.g. Rajesh Kumar (Site In-Charge)">
+              </div>
+              <div>
+                <label class="form-label">Manager Direct Mobile Phone (+91) *</label>
+                <input type="tel" class="form-control" id="lotOperatorManagerPhone" required placeholder="+91 98765 43210">
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.85rem; margin-top:0.85rem;">
+              <div>
+                <label class="form-label">Manager Official Email *</label>
+                <input type="email" class="form-control" id="lotOperatorManagerEmail" required placeholder="manager.site@domain.com">
+              </div>
+              <div>
+                <label class="form-label">On-Site Staff & Guard Strength *</label>
+                <input type="text" class="form-control" id="lotOperatorStaffCount" required placeholder="e.g. 4 Attendants + 2 Armed Guards (24/7 Shifts)">
+              </div>
+            </div>
+
+            <div style="margin-top:0.85rem;">
+              <label class="form-label">Operator GSTIN / Commercial License Number (Optional)</label>
+              <input type="text" class="form-control" id="lotOperatorGstin" placeholder="e.g. 09AAACP1234A1Z5">
+            </div>
+          </div>
+
+          <!-- SECTION 3: PARKING FACILITY & LOCATION PROFILE -->
+          <div class="form-section-card">
+            <div class="form-section-title">
+              <span>📍 3. Parking Facility & Geographical Vicinity</span>
+              <span class="form-section-subtitle">* Public listing on Google Maps</span>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.85rem;">
+              <div>
+                <label class="form-label">City *</label>
+                <select class="form-control" id="lotCity" onchange="VehiStayApp.populateLotVicinity(this.value)" required>
+                  <option value="Kanpur" selected>Kanpur</option>
+                  <option value="Varanasi">Varanasi</option>
+                  <option value="Lucknow">Lucknow</option>
+                  <option value="Noida">Noida</option>
+                  <option value="Delhi NCR">Delhi NCR</option>
+                  <option value="Mumbai">Mumbai</option>
+                  <option value="Bengaluru">Bengaluru</option>
+                  <option value="Hyderabad">Hyderabad</option>
+                </select>
+              </div>
+              <div>
+                <label class="form-label">Prominent University / Landmark Vicinity *</label>
+                <select class="form-control" id="lotVicinity" required></select>
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1.2fr 0.8fr; gap:0.85rem; margin-top:0.85rem;">
+              <div>
+                <label class="form-label">Parking Lot / Commercial Complex Public Name *</label>
+                <input type="text" class="form-control" id="lotName" required placeholder="e.g. Kalyanpur Grand Smart Parking Plaza">
+              </div>
+              <div>
+                <label class="form-label">Property Layout Structure *</label>
+                <select class="form-control" id="lotPropertyType" required>
+                  <option value="Open Commercial Plot / Ground" selected>Open Commercial Plot / Ground</option>
+                  <option value="Multi-Level Car Parking (MLCP)">Multi-Level Car Parking (MLCP)</option>
+                  <option value="Underground / Basement Deck (B1/B2)">Underground / Basement Deck (B1/B2)</option>
+                  <option value="Commercial Mall / Plaza Bay">Commercial Mall / Plaza Bay</option>
+                  <option value="Rooftop Parking Deck">Rooftop Parking Deck</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="margin-top:0.85rem;">
+              <label class="form-label">Complete Physical Address & PIN Code *</label>
+              <input type="text" class="form-control" id="lotAddress" required placeholder="e.g. Plot 42, Near Gate 1, GT Road Main Entrance, Kalyanpur, Kanpur, UP 208016">
+            </div>
+
+            <div style="margin-top:0.85rem;">
+              <label class="form-label">Entry & Exit Gates / Approach Road Width *</label>
+              <input type="text" class="form-control" id="lotGateDetails" required placeholder="e.g. Gate 1 (40ft Main Road Approach with Dedicated 2W & 4W Entry/Exit Lanes)">
+            </div>
+          </div>
+
+          <!-- SECTION 4: CAPACITY, TARIFFS & COMMERCIAL MODEL -->
+          <div class="form-section-card">
+            <div class="form-section-title">
+              <span>🚗 4. Bay Capacity, Tariffs & Revenue Share Model (in Rs.)</span>
+              <span class="form-section-subtitle">* Pricing & revenue remittance</span>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.85rem;">
+              <div>
+                <label class="form-label">Car (4W) Bays *</label>
+                <input type="number" class="form-control" id="lotCarCap" min="5" max="10000" value="75" required>
+              </div>
+              <div>
+                <label class="form-label">Bike (2W) Bays *</label>
+                <input type="number" class="form-control" id="lotBikeCap" min="5" max="10000" value="50" required>
+              </div>
+              <div>
+                <label class="form-label">EV Supercharging Bays</label>
+                <input type="number" class="form-control" id="lotEvCap" min="0" max="500" value="8">
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:0.85rem; margin-top:0.85rem;">
+              <div>
+                <label class="form-label">Car Tariff (Rs./hr) *</label>
+                <input type="number" class="form-control" id="lotTariffCar" min="10" max="1000" value="40" required>
+              </div>
+              <div>
+                <label class="form-label">Bike Tariff (Rs./hr) *</label>
+                <input type="number" class="form-control" id="lotTariffBike" min="5" max="500" value="20" required>
+              </div>
+              <div>
+                <label class="form-label">Daily Pass (Rs./day) *</label>
+                <input type="number" class="form-control" id="lotTariffDaily" min="50" max="5000" value="180" required>
+              </div>
+              <div>
+                <label class="form-label">Monthly Pass (Rs./mo) *</label>
+                <input type="number" class="form-control" id="lotTariffMonthly" min="300" max="50000" value="1500" required>
+              </div>
+            </div>
+
+            <div style="margin-top:0.85rem;">
+              <label class="form-label">Preferred Commercial Partnership Model *</label>
+              <select class="form-control" id="lotPartnershipModel" required>
+                <option value="Revenue Share (90% Landowner / 10% VehiStay Platform)" selected>Revenue Sharing Model (90% to Landowner / 10% VehiStay Platform Fee)</option>
+                <option value="Fixed Monthly Lease from VehiStay">Fixed Monthly Lease (VehiStay leases the plot directly)</option>
+                <option value="SaaS Software Only (Zero Commission, Monthly Terminal License)">SaaS Smart Terminal Software License Only (Zero Commission)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- SECTION 5: HARDWARE, SECURITY & AMENITIES CHECKLIST -->
+          <div class="form-section-card">
+            <div class="form-section-title">
+              <span>✨ 5. On-Site Hardware, Security & Amenities Checklist</span>
+              <span class="form-section-subtitle">* Displayed as verified perks to drivers</span>
+            </div>
+
+            <div class="amenities-checkbox-grid">
+              <label class="amenity-checkbox-label">
+                <input type="checkbox" id="amenityAnpr" checked>
+                <span>Automated ANPR Barrier Gate</span>
+              </label>
+              <label class="amenity-checkbox-label">
+                <input type="checkbox" id="amenityCctv" checked>
+                <span>24/7 CCTV & Cloud Recording</span>
+              </label>
+              <label class="amenity-checkbox-label">
+                <input type="checkbox" id="amenityEv" checked>
+                <span>EV 150 kW DC Fast Charging Station</span>
+              </label>
+              <label class="amenity-checkbox-label">
+                <input type="checkbox" id="amenityCovered" checked>
+                <span>Covered / Shaded Bay Structure</span>
+              </label>
+              <label class="amenity-checkbox-label">
+                <input type="checkbox" id="amenityValet">
+                <span>Valet Attendants & Key Safe</span>
+              </label>
+              <label class="amenity-checkbox-label">
+                <input type="checkbox" id="amenityWash">
+                <span>Eco Waterless Car Wash Bay</span>
+              </label>
+              <label class="amenity-checkbox-label">
+                <input type="checkbox" id="amenityLounge" checked>
+                <span>Driver Restroom & Waiting Area</span>
+              </label>
+              <label class="amenity-checkbox-label">
+                <input type="checkbox" id="amenityInsurance" checked>
+                <span>Fire Safety & Public Liability Insurance</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- SECTION 6: BANKING & PAYOUT DETAILS (REMITTANCE TO LANDOWNER) -->
+          <div class="form-section-card">
+            <div class="form-section-title">
+              <span>🏦 6. Banking & Revenue Settlement Details</span>
+              <span class="form-section-subtitle">* Direct daily payout remittance to Landowner</span>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.85rem;">
+              <div>
+                <label class="form-label">Beneficiary Account Legal Name *</label>
+                <input type="text" class="form-control" id="lotBankAccName" required placeholder="Exact name as in bank passbook">
+              </div>
+              <div>
+                <label class="form-label">Bank Name & Branch *</label>
+                <input type="text" class="form-control" id="lotBankName" required placeholder="e.g. State Bank of India, Kalyanpur Branch">
+              </div>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:0.85rem; margin-top:0.85rem;">
+              <div>
+                <label class="form-label">Account Number *</label>
+                <input type="password" class="form-control" id="lotBankAccNum" required placeholder="••••••••••••••">
+              </div>
+              <div>
+                <label class="form-label">IFSC Code *</label>
+                <input type="text" class="form-control" id="lotBankIfsc" required placeholder="e.g. SBIN0001234" style="text-transform:uppercase;">
+              </div>
+              <div>
+                <label class="form-label">UPI ID for Daily Instant Payouts *</label>
+                <input type="text" class="form-control" id="lotBankUpi" required placeholder="e.g. landowner@okhdfcbank">
+              </div>
+            </div>
+          </div>
+
+          <!-- SECTION 7: PROMOTION TIER & LEGAL DECLARATION -->
+          <div class="form-section-card">
+            <div class="form-section-title">
+              <span>🚀 7. Promotion Tier & Landowner Declaration</span>
+              <span class="form-section-subtitle">* Visibility on VehiStay network</span>
+            </div>
+
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:0.85rem; margin-bottom:1rem;">
+              <label style="background:var(--bg-alt); border:1.5px solid var(--border-color); padding:0.85rem; border-radius:var(--radius-md); cursor:pointer; display:block;">
+                <input type="radio" name="lotPlanTier" value="free" checked>
+                <strong style="display:block; margin-top:0.25rem; color:#fff;">Standard Partner (FREE Listing)</strong>
+                <span style="font-size:0.75rem; color:var(--text-muted); display:block; margin-top:0.2rem;">Live on Google Maps & search with instant online booking. 0% setup fee.</span>
+              </label>
+              <label style="background:linear-gradient(135deg, rgba(16, 185, 129, 0.15), rgba(6, 182, 212, 0.15)); border:1.5px solid #10b981; padding:0.85rem; border-radius:var(--radius-md); cursor:pointer; display:block;">
+                <input type="radio" name="lotPlanTier" value="pro">
+                <strong style="display:block; margin-top:0.25rem; color:#34d399;">Featured Pro Promotion (Promoted)</strong>
+                <span style="font-size:0.75rem; color:var(--text-muted); display:block; margin-top:0.2rem;">Top Google Maps pin, homepage hero spotlight & verified partner badge.</span>
+              </label>
+            </div>
+
+            <div style="background:rgba(0,0,0,0.3); padding:0.75rem; border-radius:var(--radius-md); border:1px solid rgba(255,255,255,0.08);">
+              <label style="display:flex; align-items:flex-start; gap:0.6rem; cursor:pointer; font-size:0.8rem; color:#cbd5e1;">
+                <input type="checkbox" id="lotLegalDeclaration" required style="accent-color:#10b981; margin-top:2px;">
+                <span>I/We hereby certify that all Landowner and Parking Operator details submitted are true, lawful, and authorized for transmission to the VehiStay Platform Administrator (<strong>mridulyadav44@gmail.com</strong>).</span>
+              </label>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; gap:0.75rem; border-top:1px solid var(--border-color); padding-top:1.25rem; margin-top:1rem;">
+            <div style="font-size:0.75rem; color:var(--text-muted);">
+              🔒 256-Bit Encrypted Partner Transmission to Admin
+            </div>
+            <div style="display:flex; gap:0.75rem;">
+              <button type="button" class="btn btn-outline-primary" onclick="VehiStayApp.closeModals()">Cancel</button>
+              <button type="submit" class="btn btn-register-lot btn-lg" style="padding:0.75rem 2rem;">
+                🚀 Submit Registration to Website Owner ➔
+              </button>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- Official Partner Agreement & Admin Submission Receipt Modal -->
+  <div class="modal-backdrop" id="partnerAgreementModal">
+    <div class="modal-dialog large-modal" style="max-width: 680px;">
+      <div class="modal-header" style="background: linear-gradient(135deg, rgba(16, 185, 129, 0.2), rgba(6, 182, 212, 0.2)); border-bottom: 1.5px solid #10b981;">
+        <div>
+          <div class="modal-title" style="color:#34d399; display:flex; align-items:center; gap:0.5rem;">
+            🎉 Partner Registration Confirmed & Transmitted!
+          </div>
+          <p style="margin:0.25rem 0 0; font-size:0.8rem; color:var(--text-muted);">
+            Official VehiStay Partner Agreement Record & Admin Notification Receipt
+          </p>
+        </div>
+        <button class="modal-close" onclick="VehiStayApp.closeModals()">&times;</button>
+      </div>
+      <div class="modal-body" style="padding:1.5rem;">
+        <div class="agreement-card">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:0.5rem; border-bottom:1px dashed #334155; padding-bottom:1rem;">
+            <div>
+              <span style="font-size:0.72rem; color:#38bdf8; font-family:var(--font-mono); font-weight:700;">VEHISTAY VERIFIED PARTNER CERTIFICATE</span>
+              <h3 style="margin:0.25rem 0 0; color:#fff;" id="receiptLotName">Metro Grand Smart Parking Plaza</h3>
+              <p style="margin:0.2rem 0 0; font-size:0.8rem; color:#94a3b8;" id="receiptLotAddress">Kalyanpur, Kanpur, UP</p>
+            </div>
+            <div style="text-align:right;">
+              <span class="badge" style="background:#10b981; color:#fff; font-size:0.75rem; padding:0.35rem 0.75rem; border-radius:12px; font-weight:700;">ACTIVE PARTNER</span>
+              <div style="font-family:var(--font-mono); font-size:0.82rem; color:var(--sky-blue-neon); margin-top:0.35rem;" id="receiptPartnerId">VP-KNP-2026-8941</div>
+            </div>
+          </div>
+
+          <div class="agreement-grid">
+            <div class="agreement-item">
+              <span>Landowner Legal Title</span>
+              <strong id="receiptLandowner">Rajesh Sharma</strong>
+              <small style="color:#94a3b8; font-size:0.7rem;" id="receiptLandownerContact">+91 9935563971 • Individual Owner</small>
+            </div>
+            <div class="agreement-item">
+              <span>Parking Operator In-Charge</span>
+              <strong id="receiptOperator">Rajesh Kumar (Supervisor)</strong>
+              <small style="color:#94a3b8; font-size:0.7rem;" id="receiptOperatorStaff">4 Staff • 24/7 Security</small>
+            </div>
+            <div class="agreement-item">
+              <span>Capacity & Live Tariffs</span>
+              <strong id="receiptCapacity">75 Cars, 50 Bikes (Rs. 40/hr)</strong>
+              <small style="color:#94a3b8; font-size:0.7rem;">ANPR Gates & EV Fast Charge</small>
+            </div>
+            <div class="agreement-item">
+              <span>Bank Settlement UPI / VPA</span>
+              <strong id="receiptBank" style="color:#10b981;">Verified for Daily Remittance</strong>
+              <small style="color:#94a3b8; font-size:0.7rem;" id="receiptUpi">landowner@upi</small>
+            </div>
+          </div>
+
+          <!-- Transmission confirmation box -->
+          <div style="margin-top:1.25rem; background:rgba(6, 182, 212, 0.1); border:1px solid rgba(6, 182, 212, 0.3); border-radius:var(--radius-md); padding:0.85rem; font-size:0.8rem; color:#cbd5e1;">
+            <div style="color:var(--sky-blue-neon); font-weight:700; margin-bottom:0.25rem; display:flex; align-items:center; gap:0.4rem;">
+              <span>✉️</span> Form Successfully Transmitted to Website Owner & Admin:
+            </div>
+            <div>
+              Recipient: <strong>mridulyadav44@gmail.com</strong> | Phone: <strong>+91 9935563971</strong><br>
+              Status: <span style="color:#10b981; font-weight:700;">Logged in Central City Repository & Google Maps Showcase Active</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer" style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.75rem;">
+        <button class="btn btn-outline-primary btn-sm" onclick="window.print()">
+          🖨️ Print Agreement Receipt
+        </button>
+        <div style="display:flex; gap:0.5rem;">
+          <a href="https://wa.me/919935563971?text=Hello%20VehiStay%20Admin,%20I%20just%20registered%20my%20parking%20lot%20area%20on%20the%20platform!" target="_blank" rel="noopener noreferrer" class="btn btn-outline-primary btn-sm" style="color:#25d366; border-color:#25d366;">
+            💬 WhatsApp Admin
+          </a>
+          <button class="btn btn-sky-blue btn-sm" onclick="VehiStayApp.closeModals()">
+            Done & Explore Live Map ➔
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VehiStay Coupon Engine Modal -->
+  <div class="modal-backdrop" id="couponModal">
+    <div class="modal-dialog large-modal" style="max-width: 650px;">
+      <div class="modal-header" style="background: linear-gradient(135deg, rgba(236, 72, 153, 0.15), rgba(6, 182, 212, 0.15)); border-bottom: 1px solid rgba(6, 182, 212, 0.3);">
+        <div>
+          <div class="modal-title" style="color:var(--sky-blue-neon); display:flex; align-items:center; gap:0.5rem;">
+            🎟️ VehiStay Coupon & Promo Rewards
+          </div>
+          <p style="margin:0.25rem 0 0; font-size:0.8rem; color:var(--text-muted);">
+            Apply exclusive coupons to save on hourly parking, EV supercharging, and monthly passes!
+          </p>
+        </div>
+        <button class="modal-close" onclick="VehiStayApp.closeModals()">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div class="coupon-grid">
+          
+          <div class="coupon-card">
+            <div class="coupon-card-header">
+              <span class="coupon-tag">🎉 WELCOME OFFER</span>
+              <span class="coupon-discount">Rs. 50 OFF</span>
+            </div>
+            <p class="coupon-desc">Get instant flat Rs. 50 discount on your first online parking booking across all cities.</p>
+            <div class="coupon-footer-row">
+              <span class="coupon-code-badge">VEHISTAY50</span>
+              <button class="btn btn-sky-blue btn-sm coupon-copy-btn" onclick="VehiStayApp.applyCoupon('VEHISTAY50', 'Rs. 50 OFF applied')">Apply Coupon ➔</button>
+            </div>
+          </div>
+
+          <div class="coupon-card">
+            <div class="coupon-card-header">
+              <span class="coupon-tag">🎓 CAMPUS SPECIAL</span>
+              <span class="coupon-discount">20% OFF</span>
+            </div>
+            <p class="coupon-desc">Special discount for Students & Faculty parking at IIT Kanpur, CSJMU, HBTU, BHU & MGKVP.</p>
+            <div class="coupon-footer-row">
+              <span class="coupon-code-badge">CAMPUSPASS</span>
+              <button class="btn btn-sky-blue btn-sm coupon-copy-btn" onclick="VehiStayApp.applyCoupon('CAMPUSPASS', '20% Campus Discount applied')">Apply Coupon ➔</button>
+            </div>
+          </div>
+
+          <div class="coupon-card">
+            <div class="coupon-card-header">
+              <span class="coupon-tag">⚡ EV FAST CHARGE</span>
+              <span class="coupon-discount">Rs. 100 OFF</span>
+            </div>
+            <p class="coupon-desc">Save flat Rs. 100 on EV Supercharge & Park Bundle sessions (150 kW DC Fast Charging).</p>
+            <div class="coupon-footer-row">
+              <span class="coupon-code-badge">EVCHARGE100</span>
+              <button class="btn btn-sky-blue btn-sm coupon-copy-btn" onclick="VehiStayApp.applyCoupon('EVCHARGE100', 'Rs. 100 EV discount applied')">Apply Coupon ➔</button>
+            </div>
+          </div>
+
+          <div class="coupon-card">
+            <div class="coupon-card-header">
+              <span class="coupon-tag">🅿️ MONTHLY VIP</span>
+              <span class="coupon-discount">Rs. 300 OFF</span>
+            </div>
+            <p class="coupon-desc">Save Rs. 300 on Monthly Reserved Spot Passes with automatic ANPR gate access.</p>
+            <div class="coupon-footer-row">
+              <span class="coupon-code-badge">MONTHLYPRO</span>
+              <button class="btn btn-sky-blue btn-sm coupon-copy-btn" onclick="VehiStayApp.applyCoupon('MONTHLYPRO', 'Rs. 300 Monthly Pass discount applied')">Apply Coupon ➔</button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline-primary" onclick="VehiStayApp.closeModals()" style="width:100%;">Close Coupons</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer"></div>
+
+  <!-- QR Code Generator Engine (Local standalone + CDN Fallback for GitHub Pages) -->
+  <script src="./qrcode.min.js"></script>
+  <script>
+    if (typeof QRCode === 'undefined') {
+      document.write('<script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"><\/script>');
+    }
+  </script>
+
+  <!-- Supabase PostgreSQL Cloud Backend SDK & Universal Client Wrapper -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="./supabase-config.js"></script>
+  <script src="./supabase-client.js"></script>
+
+  <!-- Application Script -->
+  <script src="./script.js"></script>
+</body>
+</html>
